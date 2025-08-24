@@ -10,7 +10,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
+            background-color: #ffffff;
             color: #1a1a1a;
         }
         .charvaka-text { color: #1a1a1a; }
@@ -34,94 +34,89 @@
             transform: translateY(0);
         }
         
-        /* New Horizontal Infographic Styles */
-        .process-infographic {
-            display: flex;
-            justify-content: space-between;
+        /* Timeline Styles */
+        .timeline {
             position: relative;
-            width: 100%;
-            padding-top: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .process-line {
+        .timeline::after {
+            content: '';
             position: absolute;
-            top: 20px;
-            left: 5%;
-            width: 90%;
-            height: 2px;
+            width: 3px;
             background-color: #e5e7eb;
-            z-index: 0;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
         }
-        .process-stage {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            width: 15%;
+        .timeline-container {
+            padding: 10px 40px;
             position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        .timeline-container.left {
+            left: 0;
+        }
+        .timeline-container.right {
+            left: 50%;
+        }
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: white;
+            border: 4px solid #16a34a;
+            top: 15px;
+            border-radius: 50%;
             z-index: 1;
         }
-        .process-circle {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #f8fafc;
-            border: 2px solid #e5e7eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: #4b5563;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
+        .timeline-container.right::after {
+            left: -10px;
+        }
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: #f3f4f6;
+            position: relative;
+            border-radius: 8px;
+        }
+        @media screen and (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            .timeline-container {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            .timeline-container.right {
+                left: 0%;
+            }
+            .timeline-container.left::after, .timeline-container.right::after {
+                left: 21px;
+            }
+        }
+
+        /* FAQ Accordion */
+        .faq-item .faq-question {
             cursor: pointer;
         }
-        .process-stage:hover .process-circle {
-            background-color: #16a34a;
-            border-color: #16a34a;
-            color: white;
-            transform: scale(1.1);
+        .faq-item .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
         }
-        .process-content h3 {
-            font-weight: 700;
-            color: #1a1a1a;
+        .faq-item.active .faq-answer {
+            max-height: 300px; /* Adjust as needed */
         }
-        .process-content p {
-            font-size: 0.875rem;
-            color: #6b7280;
+        .faq-item .icon {
+            transition: transform 0.3s ease-out;
         }
-        
-        /* Tooltip Styles */
-        .tooltip {
-            visibility: hidden;
-            opacity: 0;
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            margin-bottom: 15px;
-            background-color: #1a1a1a;
-            color: #fff;
-            text-align: center;
-            padding: 8px 12px;
-            border-radius: 6px;
-            width: 200px;
-            font-size: 0.8rem;
-            transition: opacity 0.3s;
-            z-index: 10;
-        }
-        .tooltip::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #1a1a1a transparent transparent transparent;
-        }
-        .process-stage:hover .tooltip {
-            visibility: visible;
-            opacity: 1;
+        .faq-item.active .icon {
+            transform: rotate(45deg);
         }
 
     </style>
@@ -137,9 +132,10 @@
                 </a>
                 <nav class="hidden md:flex items-center space-x-8">
                     <a href="#about" class="text-gray-600 hover:charvaka-text-accent font-medium transition-colors duration-300">About</a>
-                    <a href="#eligibility" class="text-gray-600 hover:charvaka-text-accent font-medium transition-colors duration-300">Rules</a>
-                    <a href="#process" class="text-gray-600 hover:charvaka-text-accent font-medium transition-colors duration-300">Process</a>
-                    <a href="#rewards" class="text-gray-600 hover:charvaka-text-accent font-medium transition-colors duration-300">Rewards</a>
+                    <a href="#timeline" class="text-gray-600 hover:charvaka-text-accent font-medium transition-colors duration-300">Timeline</a>
+                    <a href="#rewards" class="text-gray-600 hover:charvaka-text-accent font-medium transition-colors duration-300">Prizes</a>
+                    <a href="#fees" class="text-gray-600 hover:charvaka-text-accent font-medium transition-colors duration-300">Registration</a>
+                    <a href="#faq" class="text-gray-600 hover:charvaka-text-accent font-medium transition-colors duration-300">FAQ</a>
                     <button class="register-button charvaka-bg-accent text-white font-semibold px-5 py-2.5 rounded-lg hover:bg-green-700 transition-colors duration-300">Register Now</button>
                 </nav>
                 <button id="mobile-menu-button" class="md:hidden text-gray-700">
@@ -148,9 +144,10 @@
             </div>
             <div id="mobile-menu" class="hidden md:hidden mt-4 bg-white/95 p-4 rounded-lg shadow-lg">
                 <a href="#about" class="block py-2 text-gray-700 hover:charvaka-text-accent">About</a>
-                <a href="#eligibility" class="block py-2 text-gray-700 hover:charvaka-text-accent">Rules</a>
-                <a href="#process" class="block py-2 text-gray-700 hover:charvaka-text-accent">Process</a>
-                <a href="#rewards" class="block py-2 text-gray-700 hover:charvaka-text-accent">Rewards</a>
+                <a href="#timeline" class="block py-2 text-gray-700 hover:charvaka-text-accent">Timeline</a>
+                <a href="#rewards" class="block py-2 text-gray-700 hover:charvaka-text-accent">Prizes</a>
+                <a href="#fees" class="block py-2 text-gray-700 hover:charvaka-text-accent">Registration</a>
+                <a href="#faq" class="block py-2 text-gray-700 hover:charvaka-text-accent">FAQ</a>
                 <button class="register-button block w-full mt-4 text-center charvaka-bg-accent text-white font-semibold px-5 py-2.5 rounded-lg hover:bg-green-700 transition-colors duration-300">Register Now</button>
             </div>
         </div>
@@ -173,162 +170,215 @@
             </div>
         </section>
 
-        <!-- About Section -->
+        <!-- Edition Section -->
+        <section class="py-12 bg-white border-b border-gray-200">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row items-center justify-between animate-on-scroll">
+                    <div class="flex items-center mb-6 md:mb-0">
+                        <h3 class="text-2xl font-bold charvaka-text">The Contemporary Home Edition</h3>
+                        <span class="mx-4 text-gray-300 text-2xl">&</span>
+                        <img src="https://i.postimg.cc/ydR0Ydbv/logo-removebg-preview.png" alt="Charvaka Logo" class="h-12" onerror="this.onerror=null;this.src='https://placehold.co/150x50/FFFFFF/000000?text=CHARVAKA';">
+                    </div>
+                    <div class="text-center md:text-left">
+                        <p class="text-gray-600">This competition is part of a strategic partnership to explore "The Contemporary Home".</p>
+                        <a href="#" class="charvaka-text-accent font-semibold hover:underline">Learn more &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Introduction Section -->
         <section id="about" class="py-16 bg-white">
             <div class="container mx-auto px-6">
-                <div class="text-center mb-12 max-w-4xl mx-auto animate-on-scroll">
-                    <h2 class="text-3xl md:text-4xl font-bold charvaka-text mt-2">Design a Tangible, Sustainable Reality</h2>
-                    <p class="text-md text-gray-600 mt-4">
-                        This challenge invites students, freelancers, and young architects to develop innovative solutions for real-world urban problems, guided by the principles of **SDG 11: Sustainable Cities and Communities**.
-                    </p>
-                </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-                    <div class="bg-gray-50 p-6 rounded-xl animate-on-scroll" style="transition-delay: 100ms;"><i data-feather="award" class="w-10 h-10 charvaka-text-accent mx-auto mb-3"></i><h3 class="text-lg font-bold mb-1 charvaka-text">Gain Experience</h3><p class="text-gray-600 text-sm">Tackle a realistic design challenge and build your portfolio.</p></div>
-                    <div class="bg-gray-50 p-6 rounded-xl animate-on-scroll" style="transition-delay: 200ms;"><i data-feather="eye" class="w-10 h-10 charvaka-text-accent mx-auto mb-3"></i><h3 class="text-lg font-bold mb-1 charvaka-text">Get Noticed</h3><p class="text-gray-600 text-sm">Showcase your vision to industry leaders and professionals.</p></div>
-                    <div class="bg-gray-50 p-6 rounded-xl animate-on-scroll" style="transition-delay: 300ms;"><i data-feather="dollar-sign" class="w-10 h-10 charvaka-text-accent mx-auto mb-3"></i><h3 class="text-lg font-bold mb-1 charvaka-text">Win Funding</h3><p class="text-gray-600 text-sm">Secure cash prizes to fuel your innovative ideas or career.</p></div>
-                    <div class="bg-gray-50 p-6 rounded-xl animate-on-scroll" style="transition-delay: 400ms;"><i data-feather="globe" class="w-10 h-10 charvaka-text-accent mx-auto mb-3"></i><h3 class="text-lg font-bold mb-1 charvaka-text">Make an Impact</h3><p class="text-gray-600 text-sm">Contribute to the global mission for sustainable urban lives.</p></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Eligibility Section -->
-        <section id="eligibility" class="py-16 bg-gray-50">
-            <div class="container mx-auto px-6">
-                 <div class="text-center mb-12 max-w-4xl mx-auto animate-on-scroll">
-                    <h2 class="text-3xl md:text-4xl font-bold charvaka-text mt-2">Eligibility & Rules</h2>
-                </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                    <div class="bg-white p-6 rounded-xl shadow-sm animate-on-scroll flex items-start space-x-4">
-                        <i data-feather="users" class="w-10 h-10 charvaka-text-accent flex-shrink-0"></i>
-                        <div><h3 class="text-lg font-bold mb-1 charvaka-text">Team Size</h3><p class="text-gray-600 text-sm">Teams must consist of 2 to 4 members.</p></div>
+                <div class="grid md:grid-cols-3 gap-12 items-center">
+                    <div class="md:col-span-1 animate-on-scroll">
+                        <h2 class="text-4xl font-bold charvaka-text mb-4">Introduction</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-gray-500 text-sm uppercase tracking-wider">Competition Organiser</h4>
+                                <img src="https://i.postimg.cc/ydR0Ydbv/logo-removebg-preview.png" alt="Charvaka Logo" class="h-12 mt-2" onerror="this.onerror=null;this.src='https://placehold.co/150x50/FFFFFF/000000?text=CHARVAKA';">
+                            </div>
+                        </div>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm animate-on-scroll flex items-start space-x-4" style="transition-delay: 100ms;">
-                        <i data-feather="briefcase" class="w-10 h-10 charvaka-text-accent flex-shrink-0"></i>
-                        <div><h3 class="text-lg font-bold mb-1 charvaka-text">Team Composition</h3><p class="text-gray-600 text-sm">All team members must be from the same college or institution. Cross-institutional teams are not permitted.</p></div>
-                    </div>
-                     <div class="bg-white p-6 rounded-xl shadow-sm animate-on-scroll flex items-start space-x-4" style="transition-delay: 200ms;">
-                        <i data-feather="calendar" class="w-10 h-10 charvaka-text-accent flex-shrink-0"></i>
-                        <div><h3 class="text-lg font-bold mb-1 charvaka-text">Age Limit</h3><p class="text-gray-600 text-sm">Participants must be between 16 and 28 years of age.</p></div>
-                    </div>
-                     <div class="bg-white p-6 rounded-xl shadow-sm animate-on-scroll flex items-start space-x-4" style="transition-delay: 300ms;">
-                        <i data-feather="award" class="w-10 h-10 charvaka-text-accent flex-shrink-0"></i>
-                        <div><h3 class="text-lg font-bold mb-1 charvaka-text">Participant Category</h3><p class="text-gray-600 text-sm">Open to all students (school/college), young architects, and freelancers.</p></div>
-                    </div>
-                     <div class="bg-white p-6 rounded-xl shadow-sm animate-on-scroll flex items-start space-x-4" style="transition-delay: 400ms;">
-                        <i data-feather="file-text" class="w-10 h-10 charvaka-text-accent flex-shrink-0"></i>
-                        <div><h3 class="text-lg font-bold mb-1 charvaka-text">Original Work</h3><p class="text-gray-600 text-sm">All submissions must be the original work of the team members.</p></div>
-                    </div>
-                     <div class="bg-white p-6 rounded-xl shadow-sm animate-on-scroll flex items-start space-x-4" style="transition-delay: 500ms;">
-                        <i data-feather="check-circle" class="w-10 h-10 charvaka-text-accent flex-shrink-0"></i>
-                        <div><h3 class="text-lg font-bold mb-1 charvaka-text">One Entry</h3><p class="text-gray-600 text-sm">Each participant can only be a member of one team.</p></div>
+                    <div class="md:col-span-2 text-gray-600 text-lg leading-relaxed space-y-4 animate-on-scroll" style="transition-delay: 200ms;">
+                        <p>The Charvaka Urban Futures Challenge is an international architecture competition that explores how affordability and design excellence can be harmonized to create innovative, high-quality housing solutions tailored to tomorrow's urban context.</p>
+                        <p>Ultimately, this is not just a competition—it is a platform for shaping the future of cities. By bringing together a diverse global audience of creative professionals, it seeks to provoke new ideas, question outdated norms, and inspire the next generation of inclusive, high-quality urban development.</p>
+                        <p class="font-semibold">Competition is open to all. No professional qualification is required.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Process Section -->
-        <section id="process" class="py-16 bg-white">
+        <!-- Timeline Section -->
+        <section id="timeline" class="py-16 bg-gray-50">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16 max-w-4xl mx-auto animate-on-scroll">
-                    <h2 class="text-3xl md:text-4xl font-bold charvaka-text mt-2">From Idea to Impact: The 6 Stages</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold charvaka-text mt-2">Competition Timeline</h2>
                 </div>
-                <!-- Desktop Infographic -->
-                <div class="w-full max-w-6xl mx-auto animate-on-scroll hidden md:block">
-                    <div class="process-infographic">
-                        <div class="process-line"></div>
-                        <div class="process-stage">
-                            <div class="tooltip">A quick online quiz to assess your knowledge of core sustainability and architectural concepts.</div>
-                            <div class="process-circle">1</div>
-                            <div class="process-content"><h3>Quiz</h3><p>Test foundational knowledge.</p></div>
-                        </div>
-                        <div class="process-stage">
-                             <div class="tooltip">Teams receive a detailed design brief for a real-world urban challenge to develop their initial ideas.</div>
-                            <div class="process-circle">2</div>
-                            <div class="process-content"><h3>Assignment</h3><p>Develop initial concept.</p></div>
-                        </div>
-                        <div class="process-stage">
-                            <div class="tooltip">Submission of your team's detailed proposal, including concept notes, sketches, and initial plans.</div>
-                            <div class="process-circle">3</div>
-                            <div class="process-content"><h3>Pitch-Draft</h3><p>Submit detailed proposal.</p></div>
-                        </div>
-                        <div class="process-stage">
-                            <div class="tooltip">Shortlisted teams present their refined ideas to a preliminary panel of judges for feedback.</div>
-                            <div class="process-circle">4</div>
-                            <div class="process-content"><h3>Presentation</h3><p>Present to judging panel.</p></div>
-                        </div>
-                        <div class="process-stage">
-                            <div class="tooltip">Finalists deliver a comprehensive presentation of their project, followed by a Q&A session with senior judges.</div>
-                            <div class="process-circle">5</div>
-                            <div class="process-content"><h3>Final Pitch</h3><p>Deliver final design & Q&A.</p></div>
-                        </div>
-                        <div class="process-stage">
-                            <div class="tooltip">The winning teams are announced and celebrated in our final awards ceremony.</div>
-                            <div class="process-circle">6</div>
-                            <div class="process-content"><h3>Awards</h3><p>Winners announced.</p></div>
+                <div class="timeline animate-on-scroll">
+                    <div class="timeline-container left">
+                        <div class="timeline-content">
+                            <h3 class="font-bold text-lg charvaka-text-accent">18 September 2025</h3>
+                            <p class="font-semibold mt-1">Closing date for registration</p>
                         </div>
                     </div>
-                </div>
-                 <!-- Mobile View for Process -->
-                <div class="md:hidden space-y-8 animate-on-scroll">
-                    <div class="text-center"><h3 class="font-bold text-lg charvaka-text">1. Quiz</h3><p class="text-gray-600">Test foundational knowledge.</p></div>
-                    <div class="text-center"><h3 class="font-bold text-lg charvaka-text">2. Assignment</h3><p class="text-gray-600">Develop initial concept.</p></div>
-                    <div class="text-center"><h3 class="font-bold text-lg charvaka-text">3. Pitch-Draft</h3><p class="text-gray-600">Submit detailed proposal.</p></div>
-                    <div class="text-center"><h3 class="font-bold text-lg charvaka-text">4. Presentation</h3><p class="text-gray-600">Present to judging panel.</p></div>
-                    <div class="text-center"><h3 class="font-bold text-lg charvaka-text">5. Final Pitch</h3><p class="text-gray-600">Deliver final design & Q&A.</p></div>
-                    <div class="text-center"><h3 class="font-bold text-lg charvaka-text">6. Awards</h3><p class="text-gray-600">Winners announced.</p></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Rewards & Judges Section -->
-        <section id="rewards" class="py-16 bg-gray-50">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12 max-w-4xl mx-auto animate-on-scroll">
-                    <h2 class="text-3xl md:text-4xl font-bold charvaka-text mt-2">Prizes & Recognition</h2>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center">
-                    <!-- 2nd Place -->
-                    <div class="bg-white p-8 rounded-xl shadow-sm animate-on-scroll order-2 md:order-1" style="transition-delay: 200ms;">
-                        <p class="font-semibold text-gray-500">2nd Place</p>
-                        <p class="text-4xl font-extrabold my-3 charvaka-text">$2,500</p>
-                        <p class="text-gray-600 text-sm">Funding to support your next big idea or project.</p>
+                    <div class="timeline-container right">
+                        <div class="timeline-content">
+                            <h3 class="font-bold text-lg charvaka-text-accent">24 September 2025</h3>
+                            <p class="font-semibold mt-1">Competition Q&A deadline</p>
+                            <p class="text-sm text-gray-600 mt-2">No new questions will be answered after this deadline to ensure equal opportunities for all.</p>
+                        </div>
                     </div>
-                    <!-- 1st Place -->
-                    <div class="bg-white p-8 rounded-xl border-2 charvaka-border-accent shadow-xl animate-on-scroll order-1 md:order-2">
-                        <p class="font-bold charvaka-text-accent">1st Place Winner</p>
-                        <p class="text-5xl font-extrabold my-3 charvaka-text">$5,000</p>
-                        <p class="text-gray-700 font-medium text-sm">Grand prize for the most innovative and impactful design.</p>
+                    <div class="timeline-container left">
+                        <div class="timeline-content">
+                            <h3 class="font-bold text-lg charvaka-text-accent">20 October 2025</h3>
+                            <p class="font-semibold mt-1">Closing date for project submission</p>
+                            <p class="text-sm text-gray-600 mt-2">23:59 (LONDON TIME)</p>
+                        </div>
                     </div>
-                    <!-- 3rd Place -->
-                    <div class="bg-white p-8 rounded-xl shadow-sm animate-on-scroll order-3" style="transition-delay: 300ms;">
-                        <p class="font-semibold text-gray-500">3rd Place</p>
-                        <p class="text-4xl font-extrabold my-3 charvaka-text">$1,000</p>
-                        <p class="text-gray-600 text-sm">Recognition and prize for an outstanding design concept.</p>
+                    <div class="timeline-container right">
+                        <div class="timeline-content">
+                            <h3 class="font-bold text-lg charvaka-text-accent">10 December 2025</h3>
+                            <p class="font-semibold mt-1">Announcement of the winners</p>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="mt-16 text-center animate-on-scroll">
-                     <h3 class="text-2xl font-bold charvaka-text">Meet the Judges</h3>
-                     <div class="flex flex-col md:flex-row justify-center items-center gap-12 mt-6">
-                         <div><img src="https://placehold.co/100x100/e5e7eb/4b5563?text=KM" alt="Kamal Mittal" class="w-24 h-24 rounded-full mx-auto mb-2 border-4 border-white shadow-lg"><h4 class="font-bold charvaka-text">Kamal Mittal</h4><p class="text-gray-500 text-sm">Lead Architect</p></div>
-                         <div><img src="https://placehold.co/100x100/e5e7eb/4b5563?text=RB" alt="Rahul Bairwa" class="w-24 h-24 rounded-full mx-auto mb-2 border-4 border-white shadow-lg"><h4 class="font-bold charvaka-text">Rahul Bairwa</h4><p class="text-gray-500 text-sm">Senior Project Manager</p></div>
-                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- Internal Pledge Section -->
-        <section id="internal-pledge" class="py-16 bg-white">
+        <!-- Prizes Section -->
+        <section id="rewards" class="py-16 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="animate-on-scroll">
+                        <h2 class="text-4xl font-bold charvaka-text mb-2">Prizes</h2>
+                        <p class="text-gray-500 text-lg">Total Prize Fund: <span class="font-bold text-gray-800">$8,500</span></p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-8 text-center animate-on-scroll" style="transition-delay: 200ms;">
+                        <div>
+                            <p class="text-gray-500">1ST PLACE</p>
+                            <p class="text-4xl font-bold charvaka-text mt-1">$5,000</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500">2ND PLACE</p>
+                            <p class="text-4xl font-bold charvaka-text mt-1">$2,500</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500">3RD PLACE</p>
+                            <p class="text-4xl font-bold charvaka-text mt-1">$1,000</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500">STUDENT AWARD</p>
+                            <p class="text-4xl font-bold charvaka-text mt-1">$500</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-16 border-t pt-12 animate-on-scroll">
+                    <h3 class="text-2xl font-bold text-center charvaka-text">6 Honorable mentions & certificates</h3>
+                    <p class="text-center text-gray-600 mt-2 max-w-3xl mx-auto">Charvaka will acknowledge the outstanding performance of all winners and honourable mentions with Certificates of Achievement.</p>
+                </div>
+                <div class="mt-16 animate-on-scroll">
+                    <h3 class="text-2xl font-bold text-center charvaka-text">Publicity Campaign</h3>
+                    <p class="text-center text-gray-600 mt-2 max-w-3xl mx-auto">Our publicity campaign offers extensive exposure to the architectural community, ensuring that the results of the competition are seen by a vast audience.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Registration Fees Section -->
+        <section id="fees" class="py-16 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 max-w-4xl mx-auto animate-on-scroll">
+                    <h2 class="text-3xl md:text-4xl font-bold charvaka-text mt-2">Registration Fees</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="bg-white p-8 rounded-xl shadow-sm text-center animate-on-scroll">
+                        <h3 class="text-xl font-bold charvaka-text-accent">PRE-REGISTRATION</h3>
+                        <p class="text-gray-500">First 30 registrations</p>
+                        <p class="text-5xl font-extrabold my-4 charvaka-text">$0</p>
+                        <p class="text-sm text-gray-600">Free registrations are available on a first-come, first-served basis. An invitation to claim the free registration is issued via our newsletter.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-sm text-center animate-on-scroll" style="transition-delay: 200ms;">
+                        <h3 class="text-xl font-bold charvaka-text-accent">REGISTRATION</h3>
+                        <p class="text-gray-500">18 Jul - 18 Sep</p>
+                        <div class="my-4">
+                            <p class="text-3xl font-extrabold charvaka-text">$140 <span class="text-lg font-medium text-gray-500">/ team</span></p>
+                            <p class="text-3xl font-extrabold charvaka-text">$120 <span class="text-lg font-medium text-gray-500">/ student team</span></p>
+                        </div>
+                        <button class="register-button w-full charvaka-bg-accent text-white font-bold py-3 rounded-lg hover:bg-green-700 transition-colors duration-300">Register Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Eligibility Section -->
+        <section id="eligibility" class="py-16 bg-white">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-12 max-w-4xl mx-auto animate-on-scroll">
+                    <h2 class="text-3xl md:text-4xl font-bold charvaka-text mt-2">Eligibility & Rules</h2>
+                </div>
+                <div class="max-w-4xl mx-auto bg-gray-50 p-8 rounded-xl animate-on-scroll">
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="flex items-start"><i data-feather="check" class="w-5 h-5 charvaka-text-accent mr-3 mt-1 flex-shrink-0"></i><span><strong>Team Size:</strong> 2 to 4 members.</span></li>
+                        <li class="flex items-start"><i data-feather="check" class="w-5 h-5 charvaka-text-accent mr-3 mt-1 flex-shrink-0"></i><span><strong>Team Composition:</strong> All members must be from the same institution.</span></li>
+                        <li class="flex items-start"><i data-feather="check" class="w-5 h-5 charvaka-text-accent mr-3 mt-1 flex-shrink-0"></i><span><strong>Age Limit:</strong> Participants must be between 16 and 28 years old.</span></li>
+                        <li class="flex items-start"><i data-feather="check" class="w-5 h-5 charvaka-text-accent mr-3 mt-1 flex-shrink-0"></i><span><strong>Category:</strong> Open to all students, young architects, and freelancers.</span></li>
+                        <li class="flex items-start"><i data-feather="check" class="w-5 h-5 charvaka-text-accent mr-3 mt-1 flex-shrink-0"></i><span><strong>Original Work:</strong> All submissions must be the original work of the team.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Company Section -->
+        <section id="about-charvaka" class="py-16 bg-gray-50">
              <div class="container mx-auto px-6">
                  <div class="max-w-4xl mx-auto text-center animate-on-scroll">
-                    <i data-feather="shield" class="w-12 h-12 charvaka-text-accent mx-auto mb-4"></i>
-                    <h3 class="text-2xl md:text-3xl font-bold charvaka-text">More Than a Competition: Our Internal Pledge</h3>
-                    <p class="text-md text-gray-600 mt-4">
-                        The Urban Futures Challenge is an extension of our core philosophy. At Charvaka, our commitment to SDG 11 begins at home. We empower our own team through continuous training in sustainable design, foster an internal culture of innovation, and actively work to reduce our own operational footprint. This challenge is a platform for external talent and a celebration of the values our team lives by every day.
-                    </p>
-                </div>
+                     <i data-feather="shield" class="w-12 h-12 charvaka-text-accent mx-auto mb-4"></i>
+                     <h3 class="text-2xl md:text-3xl font-bold charvaka-text">More Than a Competition: Our Pledge</h3>
+                     <p class="text-md text-gray-600 mt-4 leading-relaxed">
+                         The Urban Futures Challenge is an extension of our core philosophy. At Charvaka, our commitment to <strong>SDG 11: Sustainable Cities and Communities</strong> begins at home. We empower our team through continuous training in sustainable design, foster a culture of innovation, and actively work to reduce our operational footprint. This challenge is a platform for external talent and a celebration of the values our team lives by every day. By participating, you join a global community dedicated to creating tangible, affordable, and sustainable realities for the cities of tomorrow.
+                     </p>
+                 </div>
              </div>
         </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-16 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 max-w-4xl mx-auto animate-on-scroll">
+                    <h2 class="text-3xl md:text-4xl font-bold charvaka-text mt-2">Frequently Asked Questions</h2>
+                </div>
+                <div class="max-w-3xl mx-auto space-y-4 animate-on-scroll">
+                    <div class="faq-item bg-gray-50 rounded-lg p-5">
+                        <div class="faq-question flex justify-between items-center">
+                            <h4 class="font-semibold text-lg">How do I participate in the competition?</h4>
+                            <i data-feather="plus" class="w-6 h-6 icon"></i>
+                        </div>
+                        <div class="faq-answer pt-4 text-gray-600">
+                            <p>Click on "Register Now", fill in all the required fields, choose your payment method and submit your information. Once we receive your payment, we'll send you an email with your username and password to upload your submission.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item bg-gray-50 rounded-lg p-5">
+                        <div class="faq-question flex justify-between items-center">
+                            <h4 class="font-semibold text-lg">How do I edit team member information?</h4>
+                            <i data-feather="plus" class="w-6 h-6 icon"></i>
+                        </div>
+                        <div class="faq-answer pt-4 text-gray-600">
+                            <p>You can add, remove, or edit team member information as often as you want in the upload panel, up until the submission deadline.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item bg-gray-50 rounded-lg p-5">
+                        <div class="faq-question flex justify-between items-center">
+                            <h4 class="font-semibold text-lg">Can a student project win one of the main prizes?</h4>
+                            <i data-feather="plus" class="w-6 h-6 icon"></i>
+                        </div>
+                        <div class="faq-answer pt-4 text-gray-600">
+                            <p>Yes. If the jury panel selects a student submission for the top 3, it will automatically be awarded both the main prize and the student award.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer -->
@@ -355,7 +405,7 @@
             </button>
             <div class="text-center">
                 <h2 class="text-2xl md:text-3xl font-bold charvaka-text">Register for the Challenge</h2>
-                <p class="text-gray-600 mt-3 mb-6 text-sm">Submissions are open until December 31, 2024.</p>
+                <p class="text-gray-600 mt-3 mb-6 text-sm">Registration closes September 18, 2025.</p>
             </div>
             <form action="#" method="POST">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -429,6 +479,19 @@
 
         document.querySelectorAll('.animate-on-scroll').forEach(el => {
             scrollObserver.observe(el);
+        });
+
+        // FAQ Accordion Logic
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const currentlyActive = document.querySelector('.faq-item.active');
+                if (currentlyActive && currentlyActive !== item) {
+                    currentlyActive.classList.remove('active');
+                }
+                item.classList.toggle('active');
+            });
         });
 
         // Modal Logic
